@@ -38,6 +38,7 @@ public class ImageGrab {
         return instance;
     }
 
+    //Does AsyncHttpClient resolve if wifi is open/closed? Check this!
     public void doRequest(String parameter){
         AsyncHttpClient client = new AsyncHttpClient();
 
