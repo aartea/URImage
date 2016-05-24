@@ -9,7 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ImageGrab.ApiResponseHandler{
     private String query;
 
     @Override
@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleIntent(Intent intent) {
-            //Implicit Intent needs to handle our query!
-            String query = intent.getStringExtra(SearchManager.QUERY);
+      //Implicit Intent needs to handle our query!
+     String query = intent.getStringExtra(SearchManager.QUERY);
     }
 
     //Method to use singleton, pass in string parameter to be handled by response
     @Override
-    public void handleResponse(String response) {
-
+    public void handleResponse(String query) {
+        //Do something
     }
 }

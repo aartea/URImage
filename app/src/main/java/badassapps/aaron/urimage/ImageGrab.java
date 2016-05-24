@@ -21,8 +21,8 @@ public class ImageGrab {
 
     private static final String APIKEY_SEARCH_STRING = "&api_key=f5762a90a3a7e08e4aab2ff5b8904107";
 
-    private static final String TAGS_STRING = "&tags=octopus";
-    private static final String FORMAT_STRING = "&format=json";
+    private static final String TAGS_STRING = "&tags=";
+    private static final String FORMAT_STRING = "&nojsoncallback=1&format=json";
 
     //Empty constructor
     private ImageGrab(){
@@ -38,11 +38,11 @@ public class ImageGrab {
         return instance;
     }
 
-    public void doRequest(){
+    public void doRequest(String parameter){
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(
-            "FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING + parameter + FORMAT_STRING",null, new JsonHttpResponseHandler(){
+            "FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING" + parameter + "FORMAT_STRING",null, new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
