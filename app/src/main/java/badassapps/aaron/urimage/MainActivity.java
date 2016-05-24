@@ -45,6 +45,6 @@ public class MainActivity extends AppCompatActivity implements ImageGrab.ApiResp
     //Method to use singleton, pass in string parameter to be handled by response
     @Override
     public void handleResponse(String query) {
-        //Do something
+        //Handle with picaso imageviewer
     }
 }

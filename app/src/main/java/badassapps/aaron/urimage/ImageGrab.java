@@ -48,6 +48,7 @@ public class ImageGrab {
 
                     String address = null;
 
+                    //Need to reconstruct and grab JSON object for image! Return image when done.
                     try {
                         JSONArray results = response.getJSONArray("results");
                         JSONObject location = (JSONObject) results.get(0);
@@ -66,5 +67,6 @@ public class ImageGrab {
 
     public interface ApiResponseHandler{
         void handleResponse(String response);
+
     }
 }
