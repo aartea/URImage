@@ -16,6 +16,14 @@ public class ImageGrab {
     private static ImageGrab instance;
     private static ApiResponseHandler responseHandler;
 
+    private static final String FLICKR_BASE_URL = "http://api.flickr.com/services/rest/?method=";
+    private static final String FLICKR_PHOTOS_SEARCH_STRING = "flickr.photos.search";
+
+    private static final String APIKEY_SEARCH_STRING = "&api_key=f5762a90a3a7e08e4aab2ff5b8904107";
+
+    private static final String TAGS_STRING = "&tags=octopus";
+    private static final String FORMAT_STRING = "&format=json";
+
     //Empty constructor
     private ImageGrab(){
     }
@@ -34,7 +42,7 @@ public class ImageGrab {
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(
-            "http://",null, new JsonHttpResponseHandler(){
+            "FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING + parameter + FORMAT_STRING",null, new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
