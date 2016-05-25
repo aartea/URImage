@@ -28,9 +28,7 @@ public class ImageGrab {
     private static final String TAGS_STRING = "&tags=";
     private static final String FORMAT_STRING = "&nojsoncallback=1&format=json";
 
-    LinkedList<String> items;
-    ArrayAdapter<String> mAdapter;
-
+    private JSONObject photo;
 
     //Empty constructor
     private ImageGrab(){
@@ -48,7 +46,8 @@ public class ImageGrab {
 
     public void doRequest(String parameter){
         AsyncHttpClient client = new AsyncHttpClient();
-        String id, secret, server, farm, address = null;
+
+        //Ensure somewhere our wifi is on/off
 
         client.get(
             "FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING" + parameter + "FORMAT_STRING",null,
@@ -58,23 +57,13 @@ public class ImageGrab {
                     {
                         //Need to reconstruct and grab JSON object for image! Return image when done.
                         try {
-                            JSONObject jsonObject = response.getJSONObject("photos");
-                            JSONArray jArray = jsonObject.getJSONArray("photo");
-
-                            for (int i = 0; i < jArray.length(); i++) {
-                                JSONObject photo = jArray.getJSONObject(i);
-                                if (!photo.has("url_l")) continue;
-                                items.add(photo.getString("url_l"));
-
+                            responseHandler.handleResponse(response.getString("photo"));
                             }
-                            mAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
+                         catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        responseHandler.handleResponse(items.get(0));
                     }
                 }
-
             });
         }
 
