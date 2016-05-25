@@ -28,8 +28,6 @@ public class ImageGrab {
     private static final String TAGS_STRING = "&tags=";
     private static final String FORMAT_STRING = "&nojsoncallback=1&format=json";
 
-    private JSONObject photo;
-
     //Empty constructor
     private ImageGrab(){
     }
@@ -50,14 +48,23 @@ public class ImageGrab {
         //Ensure somewhere our wifi is on/off
 
         client.get(
-            "FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING" + parameter + "FORMAT_STRING",null,
+            FLICKR_BASE_URL + FLICKR_PHOTOS_SEARCH_STRING + APIKEY_SEARCH_STRING + TAGS_STRING + parameter + FORMAT_STRING,null,
                 new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     {
+                        String id, secret, server, farm, address = null;
                         //Need to reconstruct and grab JSON object for image! Return image when done.
                         try {
-                            responseHandler.handleResponse(response.getString("photo"));
+                                JSONArray jArray = response.getJSONObject("photos").getJSONArray("photo");
+                                JSONObject jObject = (JSONObject) jArray.get(0);
+                                    id = jObject.getString("id");
+                                    secret = jObject.getString("secret");
+                                    server = jObject.getString("server");
+                                    farm = jObject.getString("farm");
+                                    address = "https://farm"+farm+".staticflickr.com/"+server+"/"+id+"_"+secret+"_m.jpg";
+                                responseHandler.handleResponse(address);
+
                             }
                          catch (JSONException e) {
                             e.printStackTrace();

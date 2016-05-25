@@ -46,12 +46,15 @@ public class MainActivity extends AppCompatActivity implements ImageGrab.ApiResp
 
     private void handleIntent(Intent intent) {
       //Implicit Intent needs to handle our query!
-     String query = intent.getStringExtra(SearchManager.QUERY);
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            ImageGrab.getInstance(MainActivity.this).doRequest(query);
+        }
     }
 
     //Method to use singleton, pass in string parameter to be handled by response
     @Override
-    public void handleResponse(final String query) {
+    public void handleResponse(String query) {
         imageView = (ImageView) findViewById(R.id.imageView);
         Picasso.with(MainActivity.this).load(query).into(imageView);
     }
